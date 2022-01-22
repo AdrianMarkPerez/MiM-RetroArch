@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>MiM-RetroArch CRT Demo</title>
+    <style type="text/css">
+        body {
+            background: #999999;
+            font-family: sans-serif;
+            margin: 15px;
+        }
+
+        #text,
+        #title,
+        #content {
+            border: 1px solid #bbbbbb;
+            padding: 15px;
+            margin: 5px;
+            background: #eeeeee;
+        }
+
+        hr {
+            color: black;
+        }
+
+        #test_canvas {
+            background: #000000;
+        }
+
+        .aligned {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .output {
+            position: relative;
+            left: 10px;
+        }
+
+        textarea {
+            font-family: monospace;
+        }
+    </style>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+</head>
+
+<body onload="webGLStart();">
+    Hello World!
+</body>
+
+
+<script id="default_shader" type="x-shader/x-vertex">
+    #version 300 es
+
+    #if defined(VERTEX)
+    uniform mat4 MVPMatrix;
+    attribute vec2 VertexCoord;
+    attribute vec2 TexCoord;
+    varying vec2 tex_coord;
+    void main()
+    {
+       gl_Position = MVPMatrix * vec4(VertexCoord, 0.0, 1.0);
+       tex_coord = TexCoord;
+    }
+    #elif defined(FRAGMENT)
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    uniform sampler2D Texture;
+    varying vec2 tex_coord;
+
+    void main()
+    {
+       gl_FragColor = texture2D(Texture, tex_coord);
+    }
+    #endif
+ </script>
+
+ <script type="text/javascript" src="crt-demo.js"></script>
+
+
+</html>
