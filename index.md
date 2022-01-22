@@ -2,4 +2,4 @@
 
 Shaders designed for use in RetroArch (Pi 4 or better)
 
-[demo.html](Demo). 
+[CRT Demo](crt-demo.html). 
