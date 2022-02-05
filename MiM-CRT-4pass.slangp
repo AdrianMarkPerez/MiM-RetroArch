@@ -1,0 +1,36 @@
+shaders = "4"
+
+shader0 = "shaders/MiM-CRT-Prep.slang"
+filter_linear0 = "false"
+srgb_framebuffer0 = "true"
+scale_type_x0 = "source"
+scale_x0 = "1.000000"
+scale_type_y0 = "source"
+scale_y0 = "1.000000"
+alias0 = FirstPass
+
+shader1 = "shaders/MiM-CRT-BlurX.slang"
+filter_linear1 = "true"
+srgb_framebuffer1 = "true"
+scale_type_x1 = "source"
+scale_x1 = "1.000000"
+scale_type_y1 = "source"
+scale_y1 = "1.000000"
+alias1 = SecondPass
+
+shader2 = "shaders/MiM-CRT-BlurY.slang"
+filter_linear2 = "true"
+srgb_framebuffer2 = "true"
+scale_type_x2 = "source"
+scale_x2 = "1.000000"
+scale_type_y2 = "source"
+scale_y2 = "1.000000"
+alias2 = ThirdPass
+
+shader3 = "shaders/MiM-CRT-Resolve.slang"
+filter_linear3 = "true"
+srgb_framebuffer3 = "true"
+scale_type_x3 = "viewport"
+scale_x3 = "1.000000"
+scale_type_y3 = "viewport"
+scale_y3 = "1.000000"
