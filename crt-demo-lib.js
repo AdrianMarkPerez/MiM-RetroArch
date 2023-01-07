@@ -1,11 +1,6 @@
 var gl = null;
 var canvas_ = null;
 var request_id = null;
-// var texture_ = null;
-// var texture_fbo_ = null;
-// var fbo_ = null;
-// var prog = null;
-// var prog2 = null;
 var vert_buf = null;
 var vert_buf_fbo = null;
 var frame_count = 0;
