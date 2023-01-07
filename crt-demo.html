@@ -1,0 +1,98 @@
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MiM-RetroArch CRT Demo</title>
+  <style type="text/css">
+    body {
+      background: #999999;
+      font-family: sans-serif;
+      margin: 15px;
+    }
+
+    div.params {
+      width: 100%;
+      height: 100px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      text-align: left;
+      padding: 20px;
+    }
+
+    #text,
+    #title,
+    #content {
+      border: 1px solid #bbbbbb;
+      padding: 15px;
+      margin: 5px;
+      background: #eeeeee;
+    }
+
+    hr {
+      color: black;
+    }
+
+    #test_canvas {
+      background: #000000;
+    }
+
+    .aligned {
+      font-weight: bold;
+      margin-right: 5px;
+    }
+
+    .output {
+      position: relative;
+      left: 10px;
+    }
+
+    textarea {
+      font-family: monospace;
+    }
+
+    video {
+      display: none;
+      width: 100px;
+      height: 100px;
+    }
+
+    .param_input {
+      width: 300px;
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+</head>
+
+<body onload="webGLStart();">
+  <div class="preview">
+    <canvas id="test_canvas" style="border: none" width="256" height="224"></canvas><br />
+  </div>
+  <div>
+    <label for="output_res">Display Resolution:</label>
+    <select name="output_res" id="output_res">
+      <option value="480p">SD (480p)</option>
+      <option value="720p">HD (720p)</option>
+      <option value="1080p">FHD (1080p)</option>
+      <option value="1440p">QHD (1440p)</option>
+      <option value="2160p">UHD (2160p)</option>
+    </select>
+    <label for="shader_choice">Shader:</label>
+    <select name="shader_choice" id="shader_choice">
+      <option value="MiM-CRT-1pass">CRT (1 pass)</option>
+      <option value="MiM-CRT-2pass">CRT (2 pass)</option>
+      <option value="MiM-CRT-3pass">CRT (3 pass)</option>
+      <option value="MiM-CRT-4pass">CRT (4 pass)</option>
+      <option value="nearest">nearest</option>
+      <option value="bilinear">bilinear</option>
+    </select>
+  </div>
+  <div class="params">
+    <table id="params">
+    </table>
+  </div>
+  <div>
+    <h3>Logging</h3>
+    <textarea id="error_console" readonly="" cols="90" rows="10"></textarea>
+    <p><output id="frame_count"><b>Frames</b></output></p>
+  </div>
+  <script type="text/javascript" src="crt-demo-lib.js"></script>
+</body>

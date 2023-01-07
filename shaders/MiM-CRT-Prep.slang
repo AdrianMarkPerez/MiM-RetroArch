@@ -1,44 +1,33 @@
 #version 450
 
-#if defined(GL_ES) && (__VERSION__==300)
-#define LAYOUT1(a)
-#define LAYOUT2(a,b)
-#define LAYOUT3(a,b,c)
-
-precision mediump int;
-precision mediump float;
-#else
-
-#define LAYOUT1(a) layout(a)
-#define LAYOUT2(a,b) layout(a,b)
-#define LAYOUT3(a,b,c) layout(a,b,c)
-#endif
+#include "MiM-CRT-Boilerplate.glsl"
 
 #if defined(PARAMETER_UNIFORM)
 #pragma parameter SOURCE_GAMMA "Source Gamma" 2.5 0.5 4.0 0.05
 
-#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 0.6 0.0 1.5 0.05
-#pragma parameter PIXEL_HALF_WIDTH "Phosphor half-width" 0.40 0.0 1.0 0.01
-#pragma parameter PIXEL_HALF_HEIGHT "Phosphor half-height" 0.30 0.0 1.0 0.01
+#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 1.1 0.0 25.0 0.05
 #pragma parameter INNER_CURVATURE_X "Phosphor horizontal curvature" 0.15 0.0 1.0  0.01
 #pragma parameter INNER_CURVATURE_Y "Phosphor vertical curvature"   0.10 0.0 1.0  0.01
-#pragma parameter INNER_CORRECTION_SCALE "Phosphor curvature correction"   1.0 0.0 3.0  0.01
+#pragma parameter INNER_CORRECTION_SCALE "Phosphor curvature correction"   9.0 0.0 10.0  0.01
+#pragma parameter PHOSPHOR_MIDPOINT_T "Phosphor midpoint t"   0.5 0.0 1.0  0.01
 
 #pragma parameter HALATION_SCALE "Halation Scale" 0.75 0.0 5.0 0.05
-#pragma parameter HALATION_FALLOFF "Halation decay power" 7.0 1.0 20.0 0.5
+#pragma parameter HALATION_COLOR_FALLOFF "Halation color decay power" 7.0 1.05 20.0 0.05
+#pragma parameter HALATION_BRIGHTNESS_FALLOFF "Halation brightness decay power" 7.0 1.05 20.0 0.05
 #endif 
 
-LAYOUT1(push_constant) uniform Push
+LAYOUT1(push_constant) uniform STRUCT_PREFIX Push
 {
 	vec4 SourceSize;
 	vec4 OriginalSize;
 	vec4 OutputSize;
 	uint FrameCount;
     float SOURCE_GAMMA;
-    float HALATION_FALLOFF;
+	float HALATION_COLOR_FALLOFF;
+	float HALATION_BRIGHTNESS_FALLOFF;
 } params;
 
-LAYOUT3(std140, set = 0, binding = 0) uniform UBO
+LAYOUT3(std140, set = 0, binding = 0) uniform STRUCT_PREFIX UBO
 {
 	mat4 MVP;
 } global;
@@ -70,11 +59,16 @@ const mediump mat3 YIQ_to_RGB = mat3( 1.0   , 1.0      , 1.0      ,	0.9563   , -
 void main()
 {
     vec4 src_degamma = vec4(vec3(params.SOURCE_GAMMA),1.0);
-    lowp vec4 curr = pow(texture(Source, vTexCoord), src_degamma);
-    lowp vec4 prev = pow(texture(PassFeedback0, vTexCoord), degamma);
-    lowp float accumulated_halation = prev.a;
-    lowp float prev_halation = (prev.rgb * RGB_to_YIQ).r;
-    lowp float halation = max(prev_halation, accumulated_halation / params.HALATION_FALLOFF);
+    // Source texture sampled as RGBA; convert to linear.
+    ivec2 tsize = ivec2(params.SourceSize.xy);
+    highp ivec2 texel = ivec2(floor(vTexCoord * vec2(tsize)));
+    mediump vec4 curr = pow(texelFetch(Source, texel, 0), src_degamma);
+    // Previous frame is sampling an sRGB texture; no conversion.
+    mediump vec4 prev = texelFetch(PassFeedback0, texel, 0);
+    mediump float accumulated_halation = prev.a;
+    mediump float prev_halation = (prev.rgb * RGB_to_YIQ).r;
+    mediump float halation = max(prev_halation, accumulated_halation / params.HALATION_BRIGHTNESS_FALLOFF);
 
-    FragColor = pow(vec4(curr.rgb, halation), regamma);
+    // Output is a sRGB Framebuffer.
+    FragColor = vec4(max(curr.rgb, prev.rgb / params.HALATION_COLOR_FALLOFF), halation);
 }

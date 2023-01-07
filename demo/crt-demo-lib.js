@@ -505,8 +505,8 @@ function loadFile(filePath) {
   return result;
 }
 function initShaders() {
-
-  slangp_ = new Slangp(loadFile("../MiM-CRT.slangp"));
+  alert("Yay Tacos!");
+  slangp_ = new Slangp(loadFile("../MiM-CRT-3pass.slangp"));
 
   var merged_params = new ParameterSet([]);
   for (var pass of slangp_.passes) {
@@ -832,6 +832,7 @@ function webGLStart() {
     var canvas = document.getElementById("test_canvas");
     initGL(canvas);
     initFramebuffer();
+    alert("the hell?");
     initShaders();
     initBuffers();
     var t = loadTexture("./fusion1.png");
