@@ -10,6 +10,7 @@ The goal was to create something that maintained framerate and approached the qu
 
 ### Examples
 
+| Example Subregion | Notes |
 | --- | --- |
 | <img src="images/Example-HD.png" data-canonical-src="images/Example-HD.png" width="244" height="324" /> | At HD resolution (720p), there is barely enough resolution to distinguish scanlines.  |
 | <img src="images/Example-FHD.png" data-canonical-src="images/Example-FHD.png" width="244" height="324" /> | At FHD resolution (1080p), scanlines are clear, phosphor height differences are indistinguishable. |
