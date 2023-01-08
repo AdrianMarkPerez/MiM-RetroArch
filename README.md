@@ -10,6 +10,9 @@ The goal was to create something that maintained framerate and approached the qu
 
 ### Examples
 
+| Subsection Example | Notes |
+| --- | --- |
+| <img src="images/Example-SD.png" data-canonical-src="images/Example-SD.png" width="244" height="324" /> | todo |
 | ![SD](images/Example-SD.png =244x324) | Standard def doesn't alias too badly, but is insufficient to discern anything |
 | ![HD](images/Example-HD.png =244x324) | todo |
 | ![FHD](images/Example-FHD.png =244x324) | todo |
