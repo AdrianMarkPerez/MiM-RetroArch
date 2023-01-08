@@ -10,17 +10,12 @@ The goal was to create something that maintained framerate and approached the qu
 
 ### Examples
 
-| Subsection Example | Notes |
 | --- | --- |
-| <img src="images/Example-SD.png" data-canonical-src="images/Example-SD.png" width="244" height="324" /> | todo |
-| ![SD](images/Example-SD.png =244x324) | Standard def doesn't alias too badly, but is insufficient to discern anything |
-| ![HD](images/Example-HD.png =244x324) | todo |
-| ![FHD](images/Example-FHD.png =244x324) | todo |
-| ![QHD](images/Example-QHD.png =244x324) | todo |
-| ![UHD](images/Example-UHD.png =244x324) | todo |
-| ![8K](images/Example-8k.png =244x324) | todo |
-
-
+| <img src="images/Example-HD.png" data-canonical-src="images/Example-HD.png" width="244" height="324" /> | At HD resolution (720p), there is barely enough resolution to distinguish scanlines.  |
+| <img src="images/Example-FHD.png" data-canonical-src="images/Example-FHD.png" width="244" height="324" /> | At FHD resolution (1080p), scanlines are clear, phosphor height differences are indistinguishable. |
+| <img src="images/Example-QHD.png" data-canonical-src="images/Example-QHD.png" width="244" height="324" /> | At QHD resolution (1440p), phosphor height differences are fairly distinct. |
+| <img src="images/Example-UHD.png" data-canonical-src="images/Example-UHD.png" width="244" height="324" /> | At UHD resolution (2160p), subpixels are distinct. |
+| <img src="images/Example-8k.png" data-canonical-src="images/Example-8k.png" width="244" height="324" /> | At 8k resolution (4320p), individual phosphors within a subpixel are discrenable. |
 
 ### Description
 
