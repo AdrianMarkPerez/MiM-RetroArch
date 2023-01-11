@@ -1,6 +1,6 @@
 # MiM-RetroArch
 
-RetroArch shaders designed for pi4+
+RetroArch shaders designed for pi4+.  They're gles 2 compatible via mangling, so there is a [WebGL 2 demo](https://adrianmarkperez.github.io/MiM-RetroArch/crt-demo.html) available.
 
 ## `MiM-CRT` Shader
 
