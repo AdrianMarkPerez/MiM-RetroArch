@@ -28,13 +28,13 @@ vec3 CenterLit(vec3 tex, vec3 x_distances, float y_distance, float w,
     vec3 y_distances_m = max(vec3(0.), vec3(y_distance) - mask_heights - kPhosphorBoxRadius);
     vec3 distances_c = sqrt(x_distances*x_distances + y_distances_c*y_distances_c);
     vec3 distances_m = sqrt(x_distances*x_distances + y_distances_m*y_distances_m);
-    float d = 7.;
+    float d = 3.;
     vec3 contrib = smoothstep(vec3(kPhosphorRadius + d*w),
                                 vec3(kPhosphorRadius - d*w),
-                                distances_c);
+                                distances_c - min(distances_c, vec3(w)));
     vec3 mask = smoothstep(vec3(kPhosphorRoundRadius + d*w), 
                            vec3(kPhosphorRoundRadius - d*w),
-                           distances_m);
+                           distances_m - min(distances_m, vec3(w)));
 
     return contrib*strobe*mask*tex;
 }
@@ -49,10 +49,10 @@ vec3 EdgeLit(vec3 tex_t, vec3 tex_b, vec3 x_distances,
     vec3 distances_t = sqrt(x_distances*x_distances + y_distances_t*y_distances_t);
     vec3 distances_m = sqrt(x_distances*x_distances + y_distances_m*y_distances_m);
     vec3 distances_b = sqrt(x_distances*x_distances + y_distances_b*y_distances_b);
-    float d = 7.;
-    vec3 mask = smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_m);
-    vec3 contrib_t = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_t);
-    vec3 contrib_b = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_b);
+    float d = 3.;
+    vec3 mask = smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_m - min(distances_m, vec3(w)));
+    vec3 contrib_t = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_t - min(distances_t, vec3(w)));
+    vec3 contrib_b = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_b - min(distances_b, vec3(w)));
     return (contrib_t*tex_t*strobe_t + contrib_b*tex_b*strobe_b)*mask;
 }
 
@@ -66,10 +66,10 @@ vec3 SplitLit(vec3 tex, vec3 x_distances,
     vec3 distances_t = sqrt(x_distances*x_distances + y_distances_t*y_distances_t);
     vec3 distances_m = sqrt(x_distances*x_distances + y_distances_m*y_distances_m);
     vec3 distances_b = sqrt(x_distances*x_distances + y_distances_b*y_distances_b);
-    float d = 7.;
-    vec3 mask = smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_t) +
-                smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_b);
-    vec3 contrib = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_m);
+    float d = 3.;
+    vec3 mask = smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_t - min(distances_t, vec3(w))) +
+                smoothstep(vec3(kPhosphorRoundRadius + d*w), vec3(kPhosphorRoundRadius - d*w), distances_b - min(distances_b, vec3(w)));
+    vec3 contrib = smoothstep(vec3(kPhosphorRadius + d*w), vec3(kPhosphorRadius - d*w), distances_m - min(distances_m, vec3(w)));
     return contrib*tex*mask*strobe;
 }
 
@@ -153,10 +153,10 @@ vec3 Phosphor(sampler2D phosphor_texture, vec2 ddx, vec2 ddy, vec2 pos, vec4 siz
                                 dist_half_lim_11 - strobe_step_11,
                                 distances_s_11);
 
-    strobe_00 = pow(strobe_00, vec3(0.5));
-    strobe_01 = pow(strobe_01, vec3(0.5));
-    strobe_10 = pow(strobe_10, vec3(0.5));
-    strobe_11 = pow(strobe_11, vec3(0.5));
+    // strobe_00 = pow(strobe_00, vec3(0.5));
+    // strobe_01 = pow(strobe_01, vec3(0.5));
+    // strobe_10 = pow(strobe_10, vec3(0.5));
+    // strobe_11 = pow(strobe_11, vec3(0.5));
 
     vec3 mid_t = vec3(params.PHOSPHOR_MIDPOINT_T);
     result += CenterLit(tex_00, cl_dist_x, rt_dist_y, w, phosphor_heights_00, strobe_00) + 
@@ -232,7 +232,6 @@ vec3 Tonemap(vec3 linear_color) {
 
 vec4 CrtColor(sampler2D phosphor_texture, sampler2D diffusion_texture) {
 	mediump vec4 result = vec4(0);
-	const float kSquishScale = 1.05;
 	vec2 dxy = params.OutputSize.zw * params.DEBUG_ZOOM;
 	highp vec2 phosphor_ddx, phosphor_ddy;
 	vec2 phosphor_pos = Warp(vTexCoord.xy, vPhosphorCurvature.xy, vPhosphorCurvature.zw, dxy, phosphor_ddx, phosphor_ddy);
