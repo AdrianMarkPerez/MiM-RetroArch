@@ -3,7 +3,7 @@
 #include "MiM-CRT-Boilerplate.glsl"
 
 #if defined(PARAMETER_UNIFORM)
-#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 1.1 0.0 5.0 0.05
+#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 1.1 0.0 25.0 0.05
 #pragma parameter INNER_CURVATURE_X "Phosphor horizontal curvature" 0.15 0.0 1.0  0.01
 #pragma parameter INNER_CURVATURE_Y "Phosphor vertical curvature"   0.10 0.0 1.0  0.01
 #pragma parameter INNER_CORRECTION_SCALE "Phosphor curvature correction"   9.0 0.0 10.0  0.01

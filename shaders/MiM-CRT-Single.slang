@@ -9,7 +9,7 @@
 #if defined(PARAMETER_UNIFORM)
 #pragma parameter SOURCE_GAMMA "Source Gamma" 2.5 0.5 4.0 0.05
 
-#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 1.1 0.0 1.5 0.05
+#pragma parameter PHOSPHOR_SCALE "Phosphor Scale" 1.1 0.0 25.0 0.05
 #pragma parameter INNER_CURVATURE_X "Phosphor horizontal curvature" 0.15 0.0 1.0  0.01
 #pragma parameter INNER_CURVATURE_Y "Phosphor vertical curvature"   0.10 0.0 1.0  0.01
 #pragma parameter INNER_CORRECTION_SCALE "Phosphor curvature correction"   9.0 0.0 10.0  0.01
@@ -20,9 +20,9 @@
 #pragma parameter OUTER_CURVATURE_Y "Diffusion vertical curvature"   0.10 0.0 1.0  0.01
 #pragma parameter OUTER_CORRECTION_SCALE "Diffusion curvature correction"   9.11 0.0 10.0  0.01
 
-#pragma parameter EXPOSURE "Exposure" 1.0 0.1 100.0 0.1
+#pragma parameter EXPOSURE "Exposure" 1.0 0.1 10.0 0.1
 
-#pragma parameter CORNER_RADIUS "Corner Radius" 0.02 0.005 0.1 0.005
+#pragma parameter CORNER_RADIUS "Corner Radius" 0.035 0.005 0.1 0.005
 
 #pragma parameter DEBUG_ZOOM "Debug Zoom" 1.0 0.01 1.0 0.01
 #pragma parameter DEBUG_PAN_X "Debug Pan (X)" 0.0 0.0 1.0 0.01
