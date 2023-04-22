@@ -9,7 +9,7 @@
 #pragma parameter INNER_CURVATURE_X "Phosphor horizontal curvature" 0.15 0.0 1.0  0.01
 #pragma parameter INNER_CURVATURE_Y "Phosphor vertical curvature"   0.10 0.0 1.0  0.01
 #pragma parameter INNER_CORRECTION_SCALE "Phosphor curvature correction"   9.0 0.0 10.0  0.01
-#pragma parameter PHOSPHOR_MIDPOINT_T "Phosphor midpoint t"   0.5 0.0 1.0  0.01
+#pragma parameter PHOSPHOR_MIDPOINT_T "Phosphor midpoint t"   0.0 0.0 1.0  0.01
 
 #pragma parameter HALATION_SCALE "Halation Scale" 0.75 0.0 5.0 0.05
 #pragma parameter HALATION_COLOR_FALLOFF "Halation color decay power" 7.0 1.05 20.0 0.05
